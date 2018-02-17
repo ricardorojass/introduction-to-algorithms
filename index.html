@@ -3,34 +3,79 @@
 <head>
   <meta charset='utf-8'>
   <title>Introduction to Algorithms</title>
-  <link rel='stylesheet' type='text/css' href='style.css'>
+  <style type="text/css">
+    
+    @import url('https://fonts.googleapis.com/css?family=PT+Mono');
+
+    html,
+    body {
+      font-size: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    p {
+      font-size: 0.9rem;
+      line-height: 30px;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    a {
+      color: #4183D7;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    ul, ol {
+      padding-left: 25px;
+    }
+
+    ul li, ol li {
+      padding-bottom: 5px
+    }
+
+    code {
+      font-family: 'PT Mono', monospace;
+      font-size: 0.8rem;
+      color: #4183D7;
+    }
+
+    #app {
+      margin: auto;
+      max-width: 800px;
+      width: calc(100% - 50px);
+      padding-bottom: 60px;
+    }
+
+    .navigation {
+      float: left;
+      text-align: center;
+      width: 50%;
+    }
+
+  </style>
 </head>
 <body>
 
   <div id='app'>
+    <!-- INDEX -->
     <h2>Introduction to Algorithms & Data Structures</h2>
 
-    <img src='images/cover_final.png'>
+    <img src='cover_final.png'>
 
     <h3>About this text</h3>
 
-    <p>This text is a primer for learning algorithms and data structures. Each example is done in JavaScript. It is intended for those coming from a coding bootcamp backgoround looking into more academic study, those looking for a refresher or for those about to undertake a Computer Science program. It does not go in depth but points the way.</p>
+    <p>This text is a primer for learning algorithms and data structures. Each example is done in JavaScript. It is intended for those coming from a coding bootcamp background looking into more academic study, those looking for a refresher or for those about to undertake a Computer Science program. It does not go in depth but points the way.</p>
 
     <p>If you're brand new to programming, I suggest <a href='https://www.codecademy.com/learn/introduction-to-javascript'>Codecademy's course on JavaScript</a> and/or the first four chapters of <a href='http://eloquentjavascript.net/'>Eloquent JavaScript</a>.</p>
 
     <p>In addition, I suggest being able to run code in the examples. This can be done in your browser, using Node or a site such as <a href='https://repl.it/languages/javascript'>repl.it</a>.</p>
-
-    <p></p>
-
-    <h3>Contents</h3>
-
-    <ol>
-      <li><a href='./big_o.html'>Big O</a></li>
-      <li><a href='./recursion.html'>Recursion</a></li>
-      <li><a href='./linked_lists.html'>Linked Lists</a></li>
-      <li><a href='./stacks_queues.html'>Stacks & Queues</a></li>
-      <li><a href='./trees.html'>Trees</a></li>
-    </ol>
 
     <p>Illustrations by <a href='http://www.chickadeegames.com/'>Chickadee Games</a>.</p>
 
@@ -45,7 +90,558 @@
     <h3>Donating</h3>
 
     <p>If you feel so inclined, <a href='https://cash.me/$akers'>Square Cash</a> or <a href='https://venmo.com/johnakers'>Venmo</a> works. Please, don't send more than $5, the price of an overpriced cup of coffee.</p>
-  </div>
+
+    <!-- BIG O -->
+    <h2 id='big-o'>Big O</h2>
+    <p><img src='bigO_1_final.png' alt='Big O'></p>
+    <p>&quot;Big O&quot;, or &quot;Big O Notation&quot;, is a term used to describe a wider field of study. It is notation and related math that allows us to denote how big and how slow our programs are. Whether it be a video game, launching a rocket, a phone app or this web page, we want our apps to run fast and use as little memory as possible. Therefore, Big O is a notation that states the worst case scenario, or a &quot;high water mark&quot;.</p>
+    <p>There are other notations (omega and theta), and they&#39;re interesting and I highly encourage you to read about them but for our purposes, and the practical purposes of writing code, we will solely focus on <em>O</em> (Big O).</p>
+    <p>Below are some examples of Big O Notation (<a href='https://en.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations'>also called the Bachmann-Landau notation</a>).</p>
+    <h3 id='notation'>Notation</h3>
+    <h4 id='o-1-'>O(1)</h4>
+    <p>O(1), pronounced &quot;Oh of one&quot;, means our program executes immediately, or in constant time, the same time in which our program was run. Regardless of the size of our data. Examples of this are conditionals and assignment.</p>
+    <pre><code>var x = 5
+    if (x == 5) {
+      console.log(&#39;x is five!&#39;)
+    }
+    </code></pre><p>Our program does not have to loop. We assigned <code>x</code>, and we put it through a conditional.</p>
+    <h4 id='o-n-'>O(n)</h4>
+    <p><em>n</em> is the number of items in our input. If we don&#39;t know exactly the number of items in our input to our program, as in algebra, we use <em>n</em> by convention to denote it.</p>
+    <p>Our program will grow to the size of our input. This is called linear growth, where the number of operations our program has is in direct correlation to the input. In the below program, we would have to hypothetically go through every item in the collection to determine whether or not it is 5, in the worst case scenario. Hence, <em>O(n)</em>.</p>
+    <pre><code>array = [ ? ] // an Array of unknown length
+
+    for (var i = 0; i &lt; array.length; i++) {
+      if (array[i] == 5) {
+        return i
+      }
+    }
+    </code></pre><h4 id='o-n-sup-2-sup-'>O(n<sup>2</sup>)</h4>
+    <p>While <em>O(n)</em> grows to the same size as our input, <em>O(n<sup>2</sup>)</em> grows to the square of our input. Meaning, if our input is a list of 4 items, we may have up to 16 operations. This usually comes about from the nesting of loops. The below code shows an example of this:</p>
+    <pre><code>array = [ ? ] // an Array of unknown length
+
+    for (var i = 0; i &lt; array.length; i++) {
+      for (var j = 0; j &lt; array.length; j++) {
+        console.log(&#39;i is: &#39; + i)
+        console.log(&#39;j is: &#39; + j)
+      }
+    }
+    </code></pre><p>Another, perhaps more common example, that can occur during something like an API request or getting two distinct pices of data and then having to merge or alter them in some way.</p>
+    <pre><code>array1 = [ ? ] // an Array of unknown length
+    array2 = [ ? ] // a separate Array of unknown length
+
+    for (var i = 0; i &lt; array1.length; i++) {
+      for (var j = 0; j &lt; array1.length; j++) {
+        console.log(array1[i] + array2[j])
+      }
+    }
+    </code></pre><p>If we have a triple nested loop, using this above example, as you may have guessed we could say <em>O(n<sup>3</sup>)</em>.</p>
+    <p>While we can say that this should be <em>O(n * m)</em> as they are distinct Arrays. Which does seem more algebraic at first glance, by convention we say this is still <em>O(n<sup>2</sup>)</em>.</p>
+    <p>The reason for this is, <em>n</em> is entirely unknown. <em>m</em> is also entirely unknown. They could be the same length, different, or having nothing them. Therefore <em>m</em> is theoretically the same as <em>n</em> in regards to a conceptual point of view on how our program speed will grow. Arguably, it makes it perhaps slightly easier to represent what is going on. For instance, what if we have 3 lists noted above? <em>O(n <em> m </em> o)</em> doesn&#39;t roll off the tongue as well as &quot;Oh of n cubed&quot;.</p>
+    <h4 id='o-log-n-'>O(log n)</h4>
+    <p><em>O(log n)</em> denotes that our program will grow with the log<sub>2</sub> of <em>n</em>. There are quite a few divide-and-conquer algorithms that filter our inputs log<sub>2</sub> times.</p>
+    <p>Logarithms can be thought of as &quot;reverse exponents&quot;. For instance, 2^<sup>3</sup> is 8. Therefore log<sub>2</sub>8 is 3. </p>
+    <p>A great example of this is the <a href='https://en.wikipedia.org/wiki/Binary_search_algorithm#Procedure'>binary-search algorithm</a>.</p>
+    <h4 id='more-notation'>More notation</h4>
+    <p>There are <em>O(n!)</em> and <em>O(2<sup>n</sup>)</em> notations as well. They are interesting but less common.</p>
+    <h3 id='analyzing-a-program'>Analyzing a program</h3>
+    <p>When evaluating an entire program, we remove the constants.</p>
+    <pre><code>a = [ ? ] // an Array of unknown length
+
+    for (var i = 0; i &lt; array.length; i++) {
+      console.log(i)
+    }
+
+    for (var i = 0; i &lt; array.length; i++) {
+      console.log(array[i])
+    }
+    </code></pre><p>We could say the above program would be <em>O(2n)</em>. We have 2 loops, not nested, that iterate over our entire list. For Big O, we care about the trend or rather &quot;how&quot; our program grows. <em>n</em>, versus <em>2n</em>, versus <em>100n</em>, they all grow in linear time.</p>
+    <p>We drop the constant, the 2, and say our program&#39;s Big O is <em>O(n)</em>.</p>
+    <p>Consider the below program:</p>
+    <pre><code>array = [ ? ] // an Array of unknown length
+
+    for (var i = 0; i &lt; array.length; i++) {
+      if (array[i] == 5) {
+        console.log(&#39;Found 5&#39;)
+      }
+    }
+
+    for (var i = 0; i &lt; array.length; i++) {
+      for (var j = 0; j &lt; array.length; j++) {
+        if (j == i) {
+          console.log(&#39;Found an interesting match!&#39;)
+        }
+      }
+    }
+
+    for (var i = 0; i &lt; array.length; i++) {
+      for (var j = 0; j &lt; array.length; j++) {
+        if (j == i) {
+          console.log(&#39;Found an interesting match again!&#39;)
+        }
+      }
+    }
+    </code></pre><p>There&#39;s a lot going on in this program.</p>
+    <ul>
+    <li>The fist <code>array</code> assignment runs in <em>O(1)</em></li>
+    <li>The next loop runs in <em>O(n)</em></li>
+    <li>The next nested loop runs in _O(n<sup>2</sup>)</li>
+    <li>The next nested loop runs in _O(n<sup>2</sup>) again</li>
+    </ul>
+    <p>Mathematically, our program could look like:</p>
+    <pre><code>O(1) + O(n) + O(n^2) + O(n^2)
+    </code></pre><p>We can then combine like terms:</p>
+    <pre><code>O(1) + O(n) + 2O(n^2)
+    </code></pre><p>Drop our constants (remember, <em>O(1)</em> is considered &quot;constant time&quot;):</p>
+    <pre><code>O(n) + O(n^2)
+    </code></pre><p>And finally, for this example, we use the largest Big O found to represent our whole program.</p>
+    <pre><code>O(n^2)
+    </code></pre><p>We do this because, what if our program had nothing but super fast <em>O(1)</em> code but then we have our <em>O(n<sup>2</sup>)</em> loop? Our program <em>has</em> to run it and therefore, it becomes our &quot;choke point&quot;. The slowest element that dictates the growth trend.</p>
+    <p><img src='bigO_2_final.png' alt='Big O'></p>
+    <h3 id='conclusion'>Conclusion</h3>
+    <p>Big O Notation is important for any field of software development. With that said, it is also a very deep and involved field that requires a lot of time to understand. Below, I&#39;ve posted some links that I suggest reading or at least glancing at. The important &quot;tweet sized&quot; takeaway from this section is:</p>
+    <blockquote>
+    <p><em>Nested loops are something to stray away from whenever possible. We determine the Big O of our program by the slowest block found, regardless of how fast everything else is. Big O is an indication of growth, not an exact amount.</em></p>
+    </blockquote>
+    <h3 id='questions'>Questions</h3>
+    <h4 id='-1'>#1</h4>
+    <p>We have a jar of 100 marbles. 50 red. 50 blue. They are mixed up randomly in the jar, and we cannot see into the jar. We pull a marble at random.</p>
+    <ul>
+    <li>How many pulls would it require to &quot;prove&quot; there are in fact 2 colors in the jar? (hint: What is the worst case scenario?)</li>
+    <li>What is the Big O of our marble pulling?</li>
+    </ul>
+    <p><a href='https://en.wikipedia.org/wiki/51'>Answer</a></p>
+    <h4 id='-2'>#2</h4>
+    <p>We created a sorting algorithm for a list that works as follows:</p>
+    <pre><code>Start at the beginning of the list
+    Traverse the list
+      Compare the current item, and the next, if there is one
+      If the current item is greater than the next, swap them
+
+    Do this &quot;n&quot; number of times
+    </code></pre><p>An example is, the list <code>[ 5, 3, 7, 2, 1 ]</code> would look like <code>[ 5, 3, 2, 1, 7 ]</code> after the first traversal.</p>
+    <ul>
+    <li>Write code for the full function. Your code should take an Array/List as an argument and return a sorted Array/List.</li>
+    <li>What is the Big O of this function?</li>
+    </ul>
+    <p><a href='https://en.wikipedia.org/wiki/Bubble_sort'>Answer</a></p>
+    <h4 id='-3'>#3</h4>
+    <p>Write code to reverse a String in O(n) time? (Meaning we go through the String only once). Your code should accept a String, such as &quot;John&quot;, and return a String &quot;nhoJ&quot;.</p>
+    <p>For a more advanced challenge, do not create a new String. Return the same String.</p>
+    <p><a href='https://repl.it/repls/JovialPushyAquaticleech'>Answer</a></p>
+    <h4 id='-4'>#4</h4>
+    <p><a href='https://en.wikipedia.org/wiki/Merge_sort'>Merge sort</a> runs in <em>O(n * log n)</em>. Implement this sort in JavaScript, or another language of your choice. In addition, understand why, for this algorithm, we multiplied the run times instead of adding them together to determine the overall Big O.</p>
+    <h3 id='more-sites'>More sites</h3>
+    <ul>
+    <li><a href='https://www.youtube.com/watch?v=kPRA0W1kECg'>Sorting Visualizations</a></li>
+    <li><a href='http://bigocheatsheet.com/'>Big O Cheat Sheet</a></li>
+    <li><a href='https://rob-bell.net/2009/06/a-beginners-guide-to-big-o-notation/'>Big O Notation by Rob Bell</a></li>
+    <li><a href='https://www.youtube.com/watch?v=AAW7WRFBKdw'>Logarithms</a></li>
+    <li><a href='http://www.purplemath.com/modules/factorial.htm'>Factorials</a></li>
+    <li><a href='https://www.youtube.com/watch?v=DJlOxOmmp9Y'>Permutations &amp; Combinations</a></li>
+    <li><a href='https://www.youtube.com/watch?v=3Ry7gl-LSGA'>Combinatorics</a></li>
+    <li><a href='https://en.wikipedia.org/wiki/Amortized_analysis'>Amortized analysis</a></li>
+    <li><a href='https://www.youtube.com/watch?v=ywWBy6J5gz8'>Sorting Visualizations via dance</a></li>
+    </ul>
+    <p>And finally, see you if you can determine the Big O of the <a href='https://www.youtube.com/watch?v=Qcv1IqHWAzg'>Stable Marriage Problem</a>, before you Google the answer.</p>
+
+
+    <!-- RECURSION -->
+    <h2 id="recursion">Recursion</h2>
+    <p><img src="recursion_final.png" alt="Recursion"></p>
+    <p>Recursion is an important part of this text for one major reason. Other data structures utilize recursion to solve their problems.</p>
+    <h3 id="the-parts-of-a-recursive-function">The parts of a recursive function</h3>
+    <ul>
+    <li>The base case.</li>
+    </ul>
+    <p>Perhaps you&#39;ve run into an example of &quot;stack level too deep&quot; before. The base case is the section that tells our program to stop.</p>
+    <ul>
+    <li>The recursive case</li>
+    </ul>
+    <p>The counter to our base case. If the base case is not met, we run this side of the function.</p>
+    <p>Let&#39;s look at a simple counter program. It will count down from a number to 0.</p>
+    <pre><code>function countdown(n) {
+      if (n &lt; 0) {
+        return undefined
+      } else {
+        console.log(n)
+        return countdown(n-1)
+      }
+    }
+    </code></pre><p>Versus the same iterative solution</p>
+    <pre><code>function countdown(n) {
+      for (var i = n; i &gt;= 0; i--) {
+        console.log(i)
+      }
+    }
+    </code></pre><p>Our base case is <code>if (n &lt; 0)</code>. This is telling our program to stop when our condition is met. If it is absent, we will infinitely loop, counting down forever.</p>
+    <p>The recursive case did something, then returned a smaller version of the exact same program.</p>
+    <blockquote>
+    <p><em>The goal of a recursive function is to continually call itself with a smaller and smaller problem until we meet our base case.</em></p>
+    </blockquote>
+    <h3 id="the-call-stack">The call stack</h3>
+    <p>In the recursive case, you&#39;ll notice we&#39;re not returning a value but instead, an entirely newly invoked function. By this, we can assume that recursive functions <em>do</em> take up more memory than an iterative one. In addition, we can also trace the call stack, the order of functions called as until we get to a base case, none of these called functions returns.</p>
+    <p>Let&#39;s use a classic Fibonacci recursive function as an example. The Fibonacci sequence is:</p>
+    <pre><code>n     | 1  2  3  4  5 
+    -----------------------
+    value | 1  1  2  3  5
+    </code></pre><p>And the code:</p>
+    <pre><code>// abbreviated &quot;fibonacci&quot; to &quot;fib&quot;
+    function fib(n) {
+      if (n &lt; 2) {
+        return n
+      } else {
+        return fib(n-1) + fib(n-2)
+      }
+    }
+    </code></pre><p>Lets trace <code>fib(5)</code>. We know it should return 5.</p>
+    <pre><code>            fib(5)
+                /    \
+           fib(4)     fib(3)
+          /    \       |    \ 
+      fib(3)  fib(2) fib(2) fib(1)
+       /   \   [1]    [1]     [1]
+    fib(2) fib(1)
+    [1]      [1]
+    </code></pre><p>We can see the Tree structure that is created and see the <code>1</code>&#39;s returned, 5 of them.</p>
+    <p>Technically, we haven&#39;t returned a value until each branch gets all the way to its base case. The values of each function then &quot;bubble up&quot; back to the original call of <code>fib(5)</code>.</p>
+    <h3 id="conclusion">Conclusion</h3>
+    <p>Recursion was needed a lot more in languages and frameworks that did not have proper loops as we know them today. It is still used in a variety of fields such as <a href="https://books.google.com/books?id=3ljRBQAAQBAJ&amp;pg=PA122&amp;lpg=PA122&amp;dq=game+development+recursion+graphics&amp;source=bl&amp;ots=5LX2SaW1c1&amp;sig=RvrzzWkju9udKcRqf73vpg0FfCI&amp;hl=en&amp;sa=X&amp;ved=0ahUKEwjmqtDl96vYAhWHgVQKHYqyD_cQ6AEIMzAB#v=snippet&amp;q=recursion&amp;f=false">graphics in game development</a>. In addition, throughout the coming chapters of this text we&#39;ll use recursion on data structures that leverage it well.</p>
+    <h3 id="questions">Questions</h3>
+    <h4 id="-1">#1</h4>
+    <p><a href="https://en.wikipedia.org/wiki/Quicksort">Quicksort</a> is a divide and conquer algorithm.</p>
+    <ul>
+    <li>Implement it in JavaScript, or a language of your choice.</li>
+    <li>Ensure you understand how it operates recursively.</li>
+    </ul>
+    <h4 id="-2">#2</h4>
+    <p>Try calling our <code>fib</code> function with an argument of <code>100</code>. You&#39;ll see that it&#39;ll take a very long time.</p>
+    <ul>
+    <li>Using <a href="https://en.wikipedia.org/wiki/Memoization">memoization</a>, try and write a function that will return <code>fib(100)</code> in linear time (<em>O(n)</em>).</li>
+    </ul>
+    <blockquote>
+    <p><em>Hint: it will not be a recursive function.</em></p>
+    </blockquote>
+    <h4 id="-3">#3</h4>
+    <p>Write a function called <code>multiply</code> that accepts 2 numbers as arguments. Write this as a recursive function without using the <code>*</code> (multiply) operator.</p>
+    <pre><code>function multiply(n, m) {
+      // code
+    }
+
+    multiply(8, 7) == 56 // true
+    </code></pre><p><a href="https://repl.it/repls/PeacefulKlutzyGeese">Answer</a></p>
+    <h4 id="-4">#4</h4>
+    <p>We want to recursively print stars in a pyramid fashion (rotated 90 degrees to the right), using an asterisk &quot;*&quot;. We want to write a function called <code>starUp</code> that accepts 2 arguments. The integer we start at and the integer we end at.</p>
+    <p>Example:</p>
+    <pre><code>starUp(0, 3)
+
+    // returns
+    *
+    **
+    ***
+    **
+    *
+    </code></pre><p>The <em>only</em> iterative part of your program is the below given helper function though bonus points if you implement a recursive solution of it:</p>
+    <pre><code>function printStars(n) {
+      var stars = &#39;&#39;
+      for (var i = 0; i &lt; n; i++) {
+        stars += &#39;*&#39;
+      }
+
+      console.log(stars)
+    }
+    </code></pre><h3 id="more-sites">More sites</h3>
+    <ul>
+    <li><a href="https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms">Master Theorem</a></li>
+    <li><a href="https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/recursionre">Khan Academy on Recursion</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Recursion_(computer_science">Wikipedia</a></li>
+    <li>Try Google&#39;ing &quot;recursion&quot;</li>
+    </ul>
+
+    <!-- LINKED LISTS -->
+    <h2 id="linked-lists">Linked Lists</h2>
+    <p><img src="linkedlists_final.png" alt="Linked Lists"></p>
+    <p>Linked Lists are a reference based data structure. This is opposed to an indexed or key based data structure such as a JavaScript Array or Object. An example of this is a Linked List is a train.</p>
+    <p>We have our engine, and an arbitrary number of following cars. The <em>n<sup>th</sup></em> car is reliant on the <em>n<sup>th</sup> - 1</em> to stay connected. It does not &quot;know&quot; about the other cars in the train, just the one before it.</p>
+    <h3 id="history">History</h3>
+    <p>In a language like C, Arrays are instantiated as follows:</p>
+    <pre><code>int integerArray[10]
+    </code></pre><p>This defines an Array, that only is allowed to possess Integers, and can have no more than 10 items in it. We were not allowed to just <code>.push</code> an arbitrary amount of items, of multiple types, into an Array like in JavaScript.</p>
+    <p>When we want to add items to this C Array, we would need to create a new one of double the length (by convention), copy over all the current items, and add the new ones, then delete the old Array.</p>
+    <p>This can get either tedious, or expensive, particularly based on the data.</p>
+    <p>Linked Lists are a way to keep adding items to an Array, without having to go through the whole protocol of Array doubling and copying.</p>
+    <h3 id="structure">Structure</h3>
+    <pre><code>// Array
+      0  1  2  3
+    [ 4, 5, 2, 7 ]
+
+    // Linked List
+    (4) -&gt; (5) -&gt; (2) -&gt; (7)
+    </code></pre><p>Linked Lists are comprised of Nodes. A Node has a value (in the example above, an Integer), and a reference, which is always another Node. Some skeleton code for a Node is below.</p>
+    <pre><code>function Node(val, ref) {
+      this.value = val
+      this.reference = ref
+    }
+
+    var n = new Node(1)
+    var m = new Node(2, n)
+    </code></pre><p>We could call methods like <code>n.reference</code> or <code>n.value</code> but we always need to remember that <code>n</code> is our first Node. Which can get tough in a program to remember. We need something to wrap all these Nodes and be able to call functions. This is where a Linked List object comes in.</p>
+    <p>Below is the <code>LinkedList</code> object, in conjunction with a recursive add function. By default, in our Linked List, we add to the end of the list. We call the first Node in the LinkedList the <code>head</code>. This is always our starting point for operating on a LinkedList due to our reference based structure.</p>
+    <pre><code>function Node(val) {
+      this.value = val
+      this.reference = null
+    }
+
+    function LinkedList() {
+      this.head = null
+
+      this.add = function(val) {
+        if (this.head == null) {
+          this.head = new Node(val)
+        } else {
+          recursiveAdd(val, this.head)
+        }
+      }
+
+      // a closure to keep the concept of a &quot;private&quot; function
+      function recursiveAdd(val, node) {
+        if (node.reference == null) {
+          node.reference = new Node(val)
+        } else {
+          recursiveAdd(val, node.reference)
+        }
+      }
+    }
+    </code></pre><p><a href="https://repl.it/repls/JointPeachpuffAgama">repl.it</a></p>
+    <p>Instantiation and calling methods on our Linked List would look like:</p>
+    <pre><code>ll = new LinkedList()
+    ll.add(1) // HEAD -&gt; (1)
+    ll.add(2) // HEAD -&gt; (1) -&gt; (2)
+    // etc.
+    </code></pre><h3 id="advantages">Advantages</h3>
+    <p>Using the Array <code>[1,2,3]</code> as an example. What if we wanted to add <code>4</code> in between the <code>2</code> and <code>3</code>?</p>
+    <p>If we&#39;re in C, and have no more room, we need to do our double/copy/delete original function. If we&#39;re in JavaScript, or C when we have room, we need to then shift every element over in the Array, the place the item at the correct index. This is an <em>O(n)</em> function.</p>
+    <p>For a LinkedList, placing at the a new Node/value anywhere but the end of will be less than <em>n</em> operations. We can simply re-arrange the references. There is not shifting of Nodes.</p>
+    <pre><code>// Pseudocode for addBefore(beforeVal, val)
+
+    Traverse Nodes
+      If the current Node&#39;s reference&#39;s value is equal to what we&#39;re looking for
+        The Node to be inserted&#39;s reference becomes the current Node&#39;s reference
+        The current Node&#39;s reference becomes the Node to be inserted
+    </code></pre><h3 id="disadvantages">Disadvantages</h3>
+    <p>When we want to add on to our list, we need to iterate over the size of the list in order to get to the end, then append. It is an <em>O(n)</em> function.</p>
+    <p>In addition, retrieving a specific element is also an <em>O(n)</em> operation.</p>
+    <p>Because Arrays operate in an indexed fashion, and if it does not need to grow (such as a JavaScript or other scripting language Array), it is an O(1) operation.</p>
+    <h3 id="conclusion">Conclusion</h3>
+    <p>Linked Lists are an important structure for allowing operations to be done and our list to be maintained in a better fashion than an Array, based on their use case.</p>
+    <p>Today, Ruby&#39;s Array, Python&#39;s List, Java&#39;s ArrayList and so forth are dynamic. They grow and resize for us and we don&#39;t need to need work about our C Array protocols. In addition, they have a lot of useful methods already built in. While they, Linked Lists, may go unused, other structures utilize them and are built off of Linked Lists (such as Trees). It is useful to understand the concept of a Linked List in order to grasp further concepts in this text.</p>
+    <h3 id="questions">Questions</h3>
+    <h4 id="-1">#1</h4>
+    <p>Implement the above <code>addBefore</code> function. It should accept two arguments, the value to find and the value to add before the &quot;found&quot; value.</p>
+    <h4 id="-2">#2</h4>
+    <p>Implement <code>remove</code>. This function accepts one argument of a value to be removed from the LinkedList.</p>
+    <blockquote>
+    <p><em>Hint: Be careful with references</em></p>
+    </blockquote>
+    <h4 id="-3">#3</h4>
+    <p>Implement <code>clear</code>. This clears the Linked List, meaning it is empty.</p>
+    <p><a href="https://repl.it/repls/RegularMundaneSpiketail">Answers to 1 through 3</a></p>
+    <h4 id="-4">#4</h4>
+    <p>Implement a &quot;tail pointer&quot; in a Linked List. In addition, add <code>.previous</code> to your Node object. This is called a &quot;doubly linked list&quot;.</p>
+    <blockquote>
+    </blockquote>
+    <p><a href="https://repl.it/repls/TransparentFavoriteWolverine">Answer</a></p>
+    <h3 id="more-sites">More Sites</h3>
+    <ul>
+    <li><a href="https://www.youtube.com/watch?v=njTh_OwMljA">HackerRank on Linked Lists</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Linked_list">Wikipedia</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Dynamic_array">Dynamic Arrays</a></li>
+    </ul>
+
+    <!-- STACKS & QUEUES -->
+    <h2 id="stacks-queues">Stacks &amp; Queues</h2>
+    <p><img src="stacks_final.png" alt="Stacks"></p>
+    <p>Stacks and Queues are two abstract data types. We can use various structures to represent them but what is most important, is their behavior that defines them and how we can use each respectively.</p>
+    <p>There are no code examples in this section but rather, just pseudocode. </p>
+    <h3 id="stacks">Stacks</h3>
+    <p>A Stack is a &quot;First In Last Out&quot; (FILO) structure.</p>
+    <p>Examples of this are collecting and cleaning plates after a meal. When we collect a plate, we put it on the top of the previous plate and when we clean them, we take the one off the top first. Another, perhaps better, example is a can of Pringles or tennis ball sleeve. The first chip in, is the last one out.</p>
+    <h4 id="functions">Functions</h4>
+    <p>Stacks have three primary functions.</p>
+    <ul>
+    <li><code>.push(item)</code>, which adds the item on to the Stack</li>
+    <li><code>.pop()</code>, which removes the top item off the Stack</li>
+    <li><code>.peek()</code>, which examines the top item off of the Stack</li>
+    </ul>
+    <p>You&#39;ll notice that these functions already exist within JavaScript&#39;s Array. Modern programming languages have enabled this behavior, merging it in to the Dynamic Arrays linked in the previous chapter.</p>
+    <p>Another example of a Stack is the &quot;Undo&quot; function on your computer. When you type something in, its pushed on to your computer&#39;s memory Stack. When (usually) Ctrl/Cmd + Z is invoked, it pops off the last item in the Stack and reverts us back to where we were.</p>
+    <h3 id="queues">Queues</h3>
+    <p><img src="queues_final.png" alt="Queues"></p>
+    <p>Queues differ slightly in that they are a &quot;First In First Out&quot; (FIFO) data structure, as the name implies. Think of a movie theater line. The first person in line, gets their ticket first.</p>
+    <p>There are four functions that we want for our Queue</p>
+    <ul>
+    <li><code>.enqueue(item)</code>, which puts an item to the back of the line</li>
+    <li><code>.dequeue()</code>, remove the first item in the Queue and moves all further items up</li>
+    <li><code>.first()</code>, examines the first item in line</li>
+    <li><code>.last()</code>, examines the last item in line</li>
+    </ul>
+    <h3 id="behavior">Behavior</h3>
+    <p><em>Why use these structures? They&#39;re already built in to the language that I&#39;m using!</em></p>
+    <p>This is a valid question but as noted before, the behavior of each and when to use them, even if they&#39;re incorporated into the language that we currently use.</p>
+    <p>Though you may end up with an Array, we would be using its Stacks or Queue behavior.</p>
+    <h3 id="questions">Questions</h3>
+    <h4 id="-1">#1</h4>
+    <p>Use a Linked List (ref: previous chapter), to create a Stack.</p>
+    <h4 id="-2">#2</h4>
+    <p>Use a Linked List (ref: previous chapter), to create a Queue.</p>
+    <h4 id="-3">#3</h4>
+    <p>Using 2 Stacks, create a Queue. Below is an example of skeleton code that you would need to leverage.</p>
+    <pre><code>function Queue() {
+      this.stack1 = new Stack()
+      this.stack2 = new Stack()
+    }
+    </code></pre><h4 id="-4">#4</h4>
+    <p>Using a Stack and recursion, write code to determine whether or not brackets are valid for code, represented as a String.</p>
+    <pre><code>var input = &quot;ary = [1,2,3]; for (var i = 0; i &lt; ary.length; i++) { console.log(ary[i]) }&quot;
+    </code></pre><p>Your function should return a Boolean, and accept a a String.</p>
+    <h4 id="-5">#5</h4>
+    <p>Determine a way to create a Priority Queue, where 1 is the highest priority.</p>
+    <p>It operates as a queue, though if we have something with the highest priority in our queue it must be dequeue&#39;d first.</p>
+    <p>For instance:</p>
+    <ul>
+    <li>Enqueue <code>{ priority: 3, value 5 }</code></li>
+    <li>Enqueue <code>{ priority: 1, value 2 }</code></li>
+    <li>Enqueue <code>{ priority: 2, value 1 }</code></li>
+    </ul>
+    <p>When we dequeue, <code>{ priority: 1, value 2 }</code> will be the first item to be returned, though the second entered into the Priority Queue.</p>
+    <p>An example of this is Amazon, or other vendors. If you pay a bit more, you get a higher priority on your order.</p>
+    <h3 id="more-reading">More reading</h3>
+    <ul>
+    <li><a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)">Stacks</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Queue_(abstract_data_type)">Queues</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Priority_queue">Priority Queues</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Stack-based_memory_allocation">Memory Stack</a></li>
+    <li><a href="https://stackoverflow.com/questions/2074970/stack-and-queue-why">Why use Stacks and Queues?</a></li>
+    </ul>
+
+    <!-- TREES -->
+<h2 id="trees">Trees</h2>
+<p><img src="trees_1_final.png" alt="Trees"></p>
+<p>Trees, at first glance, are very similar to Linked Lists. They are comprised of Nodes, just like a Linked List but they have two main differences.</p>
+<ol>
+<li>Terminology</li>
+<li>Each Every Node can have multiple references</li>
+</ol>
+<pre><code>Fig. 1
+
+         (A)
+        /   \
+     (B)     (C)
+    /           \
+ (D)             (E)
+</code></pre><p>Instead of a <code>head</code>, we have a <code>root</code>, our Node labeled <em>A</em>. <em>A</em>&#39;s <code>children</code> (not <code>references</code>) are <em>B</em> and <em>C</em>. There <em>B</em> and <em>C</em>&#39;s <code>parent</code> is <em>A</em>. We would say our &quot;leaf Nodes&quot;, Nodes that have no <code>children</code>, are <em>D</em> and <em>E</em>. In addition, <em>D</em> and <em>E</em> have a common <code>ancestor</code> in <em>A</em>.</p>
+<p>In addition, this Tree would have a depth of 2. We can also have a Tree that looks like the below. Unless we specify a type of Tree, by default there are no limit to the number of <code>children</code> per Node but a Tree is always defined by having a <code>root</code>.</p>
+<p>The above figure is a very simple Tree. Each Node (called <code>TreeNode</code> for this instance) would look like the below, in code:</p>
+<pre><code>function TreeNode(value) {
+  this.value = value
+  this.children = []
+}
+</code></pre><pre><code>Fig. 2
+
+             (A)
+            / | \
+         (B) (C) (D)
+</code></pre><h3 id="breadth-first-search">Breadth First Search</h3>
+<p>Breadth First Search (BFS) is an algorithm that goes through our Tree, in each level, and returns and/or examines in the Nodes, by level of the Tree.</p>
+<p>For instance, in <em>Fig. 1</em>, we would return the following order: <em>A</em>, <em>B</em>, <em>C</em>, __D, <em>E</em>.</p>
+<p>When our Tree is very wide, this algorithm can be a bit slow but may be advisable to use when our Tree is a skinny and has many levels.</p>
+<h3 id="depth-first-search">Depth First Search</h3>
+<p>Depth First Search (DFS) is an algorithm that goes through our Tree, getting all the way to the bottom, then coming back up, going through each first child, recursively, labeling it discovered and moving on to the next.</p>
+<p>In <em>Fig. 2</em>, we would return the following order: <em>A</em>, <em>B</em>, <em>D</em>, <em>C</em>, <em>E</em>.</p>
+<p>Notice the difference from BFS, where we get to the bottom of the Tree quickly. This is optimal for a shallow Tree, that may be a bit on the wider side.</p>
+<h3 id="binary-trees">Binary Trees</h3>
+<p>Binary Trees put some conditions are our Nodes.</p>
+<ol>
+<li>Each Node may only have 2 children</li>
+<li>The <code>left_child</code> must have a lesser value than the <code>parent</code></li>
+<li>The <code>right_child</code> must have an equal or greater value than the <code>parent</code></li>
+</ol>
+<p>An example of our Binary Tree Node (<code>BTNode</code>) would look like, in code:</p>
+<pre><code>function BTNode(value) {
+  this.value = value
+  this.left_child = null
+  this.right_child = null
+}
+</code></pre><p>And we will use a <code>BinaryTree</code> wrapper Object around our Nodes, much like our Linked List chapter.</p>
+<pre><code>function BinaryTree() {
+  this.root = null
+
+  this.add = function(value) {
+    if (this.root == null) {
+      this.root = new BTNode(value)
+    } else {
+      recursiveAdd(this.root, value)
+    }
+  }
+
+  function recursiveAdd(node, value) {
+    if (value &gt;= node.value) {
+      if (node.right_child == null) {
+        node.right_child = new BTNode(value)
+      } else {
+        recursiveAdd(node.right_child, value)
+      }
+    } else {
+      if (node.left_child == null) {
+        node.left_child = new BTNode(value)
+      } else {
+        recursiveAdd(node.left_child, value)
+      }
+    }
+  }
+}
+</code></pre><p>Like our LinkedList, we can utilize recursion for additions to our Binary Tree.</p>
+<p><img src="trees_2_final.png" alt="trees2"></p>
+<h3 id="questions">Questions</h3>
+<h4 id="-1">#1</h4>
+<p>Morse Code is an alphabet broken up into dashes and dots. <a href="https://en.wikipedia.org/wiki/Morse_code#/media/File:Morse_code_tree3.png">It is actually broken into a Binary Tree structure</a>.</p>
+<p>Using the image provided, implement a Morse reader, that accepts a String as an argument</p>
+<h3 id="-2">#2</h3>
+<p>Implement a <code>delete(value)</code> method on our <code>BinaryTree</code>.</p>
+<p><a href="#">Answer</a></p>
+<h3 id="-3">#3</h3>
+<p>Based on the <a href="https://en.wikipedia.org/wiki/Breadth-first_search#Pseudocode">Wikipedia Pseudocode</a>, implement BFS on a Tree.</p>
+<h3 id="-4">#4</h3>
+<p>Based on the <a href="https://en.wikipedia.org/wiki/Depth-first_search">Wikipedia Pseudocode</a>, implement DFS on a Tree.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Trees are an important data structure. The DOM in this webpage is a Tree. MongoDB, a popular No-SQL database, uses Trees. Object hierarchy and understanding inheritance as it pertains to programming can be displayed with a Tree.</p>
+<p>Understanding them is important and leads into further data structures, such as the below mentioned Graphs.</p>
+<h3 id="a-quick-note-on-graphs">A quick note on Graphs</h3>
+<p>Graphs, to keep it short, are a &quot;root-less&quot; Tree. There is no one single starting point. They have Vertices (instead of Nodes) and Edges (instead of Children). They can be directional:</p>
+<pre><code>// B is an Edge to A but A is not an Edge to B
+
+(A) -&gt; (B)
+</code></pre><p>Bi-directional:</p>
+<pre><code>// A and B are Edges to each other
+
+(A) &lt;-&gt; (B)
+</code></pre><p>or even contain a cycle:</p>
+<pre><code>// A to B to C to A ... etc.
+
+(A) -&gt; (B)
+  ^    /
+   \  v
+    (C)
+</code></pre><p>LinkedIn, your friends on Twitter or Facebook and other popular apps all utilize a Graph in order to give you &quot;2nd degree relationships&quot; and so forth.</p>
+<p>In addition, we can use our DFS/BFS algorithms to search for a Vertex. For the purpose overall of this text, I won&#39;t go into them too much but if you have the time and are interested, I highly recommend checking it out.</p>
+<p>We can also weight the Edges in a Graph. This allows us to represent travel time, scheduling and other applications.</p>
+<h2 id="more-reading">More Reading</h2>
+<ul>
+<li><a href="http://www.cs.man.ac.uk/~pjj/cs212/fix.html">Infix, Postfix and Prefix Notation</a></li>
+<li><a href="https://en.wikipedia.org/wiki/List_of_data_structures#Trees">Other Types of Trees</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra&#39;s Algorithm</a></li>
+</ul>
+
+  </div> <!-- / -->
 
 </body>
 </html>
